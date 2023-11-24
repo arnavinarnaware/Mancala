@@ -5,8 +5,8 @@ class MancalaGame:
         self.pits_per_player = pits_per_player
         self.board = [initial_stones] * (2 * pits_per_player + 2)
         self.current_player = 1
-        self.countdown_pit = random.randint(1, pits_per_player)  # Randomly choose a countdown pit
-        self.countdown_counter = 3  # Initial countdown value
+        self.countdown_pit = random.randint(1, pits_per_player)  #randomly choose a countdown pit
+        self.countdown_counter = 3  #initial countdown value
 
     def display_board(self):
         print("Player 2 (bottom)")
@@ -24,22 +24,22 @@ class MancalaGame:
             if (self.current_player == 1 and pit_index == self.pits_per_player + 1) or (
                 self.current_player == 2 and pit_index == 0
             ):
-                continue  # skip opponent's store
+                continue  #skip opponent store
             self.board[pit_index] += 1
             stones_to_move -= 1
 
         self.handle_special_pits(pit_index)
 
-        # Check for another turn
+        #check if another turn
         if self.current_player == 1 and pit_index == 0:
-            return True  # Player 1 gets another turn
+            return True  #Player 1 gets another turn
         elif self.current_player == 2 and pit_index == self.pits_per_player + 1:
-            return True  # Player 2 gets another turn
+            return True  #Player 2 gets another turn
 
-        return False  # No another turn
+        return False  #doesn't get extra turn
 
     def handle_special_pits(self, last_pit_index):
-        # Countdown Pit Rule
+        #Countdown pit
         if last_pit_index == self.countdown_pit and self.countdown_counter > 0:
             print(f"Countdown pit activated! Countdown: {self.countdown_counter}")
             self.countdown_counter -= 1
@@ -47,7 +47,7 @@ class MancalaGame:
                 print("Boom! Countdown pit exploded!")
                 self.distribute_stones_from_countdown_pit()
 
-        # Warp Pit Rule
+        #warp pit
         elif last_pit_index == self.warp_pit:
             print("Warp pit activated! Warping to a random pit on the opponent's side.")
             self.warp_to_random_pit()
@@ -61,17 +61,17 @@ class MancalaGame:
             if (self.current_player == 1 and pit_index == self.pits_per_player + 1) or (
                 self.current_player == 2 and pit_index == 0
             ):
-                continue  # skip opponent's store
+                continue  #skip opponent's store
             self.board[pit_index] += 1
             stones_to_distribute -= 1
             pit_index = (pit_index + 1) % len(self.board)
 
         self.countdown_pit = random.randint(1, self.pits_per_player)  # Randomly choose a new countdown pit
-        self.countdown_counter = 3  # Reset countdown counter
+        self.countdown_counter = 3  #reset countdown counter
 
     def warp_to_random_pit(self):
         opponent_pits = list(range(1, self.pits_per_player + 1))
-        opponent_pits.reverse()  # Reverse the list to simulate moving in the opposite direction
+        opponent_pits.reverse()  #reverse the list to simulate moving in the opposite direction
 
         random_opponent_pit = random.choice(opponent_pits)
         print(f"Warped to pit {random_opponent_pit} on the opponent's side!")
@@ -84,13 +84,13 @@ class MancalaGame:
             if (self.current_player == 1 and pit_index == self.pits_per_player + 1) or (
                 self.current_player == 2 and pit_index == 0
             ):
-                continue  # skip opponent's store
+                continue  #skip opponent store
             self.board[pit_index] += 1
             stones_to_move -= 1
             pit_index = (pit_index + 1) % len(self.board)
 
     def switch_player(self):
-        self.current_player = 3 - self.current_player  # Switch between player 1 and player 2
+        self.current_player = 3 - self.current_player  #switch between Player 1 and Player 2
 
 # Example usage:
 if __name__ == "__main__":
